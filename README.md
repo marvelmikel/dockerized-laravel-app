@@ -64,7 +64,7 @@ docker build -t laravel-service .
 
 
 ```
- docker run -p 8000:8000 laravel-service
+ docker run -p 8080:8000 laravel-service
 ```
 
 ## To Create a Docker file to run this laravel service environment in php version 8.2 aslo create a mysql database service so it would be connect to the laravel project. Copy code below into your Dockerfile
@@ -107,6 +107,7 @@ EXPOSE 8000
 # Start the Laravel service
 CMD php artisan serve --host=0.0.0.0 --port=8000
 
+
 ```
 ## To set up the MySQL database service, you can use a separate Docker container. Here's an example of docker-compose.yml file, copy code below;
 
@@ -119,17 +120,19 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '8000:8000'
+      - 8080:8000
     depends_on:
       - db
+    volumes:
+      - ./Users/michaelmarvellous/dev/comment-app:/var/www/html
   db:
     image: mysql:8.0
     restart: always
     environment:
       MYSQL_DATABASE: laravel_db
       MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: your_password
-      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456
     volumes:
       - db-data:/var/lib/mysql
 
